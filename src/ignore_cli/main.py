@@ -1,92 +1,46 @@
 import argparse
 import os
+from ignore_cli.gitignore_generator import generate_gitignore
 
-DEFAULT_GITIGNORE_CONTENT = """
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.pyc
-*.pyd
-*.pyo
+# Handles the 'create' command to generate a .gitignore file
+def handle_create_command(args):
+    target_directory = os.path.abspath(args.directory)
 
-# Distribution / packaging
-.Python
-env/
-venv/
-*.egg
-*.egg-info/
-dist/
-build/
-*.whl
-
-# IDE-specific files
-.idea/             # IntelliJ / PyCharm
-*.iml              # IntelliJ / PyCharm module files
-.vscode/           # VS Code
-.vscode-server/    # VS Code remote development
-.history/          # Some IDEs' local history
-
-# Operating System files
-.DS_Store          # macOS
-Thumbs.db          # Windows
-
-# Temporary files, logs, etc.
-*.log
-*.tmp
-*.bak
-
-# Testing
-.pytest_cache/
-htmlcov/
-.coverage
-
-# User-specific configuration (if any sensitive data)
-# .env # If you use python-dotenv for environment variables
-"""
-
-def generate_gitignore(directory, content=DEFAULT_GITIGNORE_CONTENT):
-    gitignore_path = os.path.join(directory, '.gitignore')
-
-    try:
-        if os.path.exists(gitignore_path):
-            print(f".gitignore file already exists at {gitignore_path}")
-            return
-        
-        with open(gitignore_path, 'w') as f:
-            f.write(content.strip())
-        print(f".gitignore file created at {gitignore_path}")
-    except IOError as e:
-        print(f"Error creating .gitignore file: {e}")
+    if not os.path.isdir(target_directory):
+        print(f"Error: The specified directory '{target_directory}' does not exist.")
+        return
+    generate_gitignore(target_directory)
 
 def main():
+    # Parses arguments from the command line
     parser = argparse.ArgumentParser(
         description='Generate a .gitignore file in the specified directory.'
     )
 
-    parser.add_argument(
-        '--create',
-        action='store_true',
-        help='Create a .gitignore file in the specified directory.'
-    )
+    # Adds a subparser for the 'create' command
+    subparsers = parser.add_subparsers(dest='command', help='Available commands')
 
-    parser.add_argument(
+    # Adds an argument to create a .gitignore file
+    create_parser = subparsers.add_parser('create', help='Create a .gitignore file in the specified directory')
+
+    # Adds an optional argument for the directory where the .gitignore file will be created
+    create_parser.add_argument(
         'directory',
         nargs='?',
         default='.',
         help='The directory where the .gitignore file will be created. Defaults to the current directory.'
     )
 
+    # Sets the function to be called when the 'create' command is used
+    create_parser.set_defaults(func=handle_create_command)
+
     args = parser.parse_args()
 
-    if args.create:
-        target_directory = os.path.abspath(args.directory)
-
-        if not os.path.isdir(target_directory):
-            print(f"Error: The specified directory '{target_directory}' does not exist.")
-            return
-        generate_gitignore(target_directory)
+    # Calls the appropriate function based on the command provided
+    if hasattr(args, 'func'):
+        args.func(args)
     else:
-        print("No action specified.")
-        print("Use --help for more information.")
+        parser.print_help()
 
 if __name__ == '__main__':
     main()
