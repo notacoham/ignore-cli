@@ -5,6 +5,10 @@ def generate_gitignore(directory):
     gitignore_path = os.path.join(directory, '.gitignore')
 
     try:
+        if os.path.exists(gitignore_path):
+            print(f".gitignore file already exists at {gitignore_path}")
+            return
+        
         with open(gitignore_path, 'w') as f:
             pass
         print(f".gitignore file created at {gitignore_path}")
@@ -17,7 +21,7 @@ def main():
     )
 
     parser.add_argument(
-        'create',
+        '--create',
         action='store_true',
         help='Create a .gitignore file in the specified directory.'
     )
@@ -33,6 +37,7 @@ def main():
 
     if args.create:
         target_directory = os.path.abspath(args.directory)
+
         if not os.path.isdir(target_directory):
             print(f"Error: The specified directory '{target_directory}' does not exist.")
             return
@@ -40,3 +45,6 @@ def main():
     else:
         print("No action specified.")
         print("Use --help for more information.")
+
+if __name__ == '__main__':
+    main()
