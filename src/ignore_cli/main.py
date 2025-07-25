@@ -1,7 +1,7 @@
 import argparse
 import os
 
-def generate_gitignore():
+def generate_gitignore(directory):
     gitignore_path = os.path.join(directory, '.gitignore')
 
     try:
