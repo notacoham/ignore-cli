@@ -1,5 +1,5 @@
 import os
-from src.ignore_cli.gitignore_generator import DEFAULT_GITIGNORE_CONTENT 
+from .gitignore_generator import DEFAULT_GITIGNORE_CONTENT 
 
 def format_content(content=None):
     # If no content is provided, sets the default git content
