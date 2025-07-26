@@ -14,6 +14,7 @@ def handle_create_command(args):
         return
     # Scans the directory for existing .gitignore files
     combined_files_and_dirs = scan_directory(target_directory)
+    process_generate_gitignore(target_directory, content=combined_files_and_dirs)
     
 
     # generate_gitignore(target_directory)
