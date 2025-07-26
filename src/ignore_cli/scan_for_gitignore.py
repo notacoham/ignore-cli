@@ -57,11 +57,12 @@ gitignore_patterns = {
 }
 
 # file and directory scanning function
-def scan_directory():
+def scan_directory(directory='.'):
     # Variable to hold the root directory and initialize sets for files and directories
-    root_directory = os.getcwd()
+    root_directory = os.path.abspath(directory)
     all_files = set()
     all_dirs = set()
+    combined_files_and_dirs = set()
 
     # Walk through the directory tree using os.walk
     print(f"Scanning directory: {root_directory}")
@@ -86,10 +87,14 @@ def scan_directory():
                 # use fnmatch to match patterns
                 if fnmatch.fnmatch(dir, pattern):
                     all_dirs.add(dir)
+        combined_files_and_dirs = all_files | all_dirs
 
 
     print(f"Files: {all_files}")
     print("" + "-" * 80)
     print(f"Directories: {all_dirs}")
+    print("" + "-" * 80)
+    print(f"Combined Files and Directories: {combined_files_and_dirs}")
+    return combined_files_and_dirs
 
 scan_directory()
