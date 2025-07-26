@@ -2,7 +2,7 @@ import argparse
 import os
 # from ignore_cli.gitignore_generator import generate_gitignore
 from ignore_cli.append_to_gitignore import append_to_gitignore
-from ignore_cli.scan_for_gitignore import scan_directory
+from ignore_cli.scan_for_gitignore import scan_directory_for_create
 from ignore_cli.process_gitignore import generate_gitignore 
 
 # Handles the 'create' command to generate a .gitignore file
@@ -13,7 +13,7 @@ def handle_create_command(args):
         print(f"Error: The specified directory '{target_directory}' does not exist.")
         return
     # Scans the directory for existing .gitignore files
-    combined_files_and_dirs = scan_directory(target_directory)
+    combined_files_and_dirs = scan_directory_for_create(target_directory)
 
     # Generates a new .gitignore file with the scanned content
     generate_gitignore(target_directory, content=combined_files_and_dirs)

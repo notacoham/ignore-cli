@@ -57,7 +57,7 @@ gitignore_patterns = {
 }
 
 # file and directory scanning function
-def scan_directory(directory='.'):
+def scan_directory_for_create(directory='.'):
     # Variable to hold the root directory and initialize sets for files and directories
     root_directory = os.path.abspath(directory)
     all_files = set()
@@ -102,11 +102,12 @@ def scan_directory(directory='.'):
             combined_files_and_dirs['directories'] = []
         combined_files_and_dirs['directories'].append(dir)
 
-    print(f"Files: {all_files}")
-    print("" + "-" * 80)
-    print(f"Directories: {all_dirs}")
-    print("" + "-" * 80)
-    print(f"Combined Files and Directories: {combined_files_and_dirs}")
+    # print(f"Files: {all_files}")
+    # print("" + "-" * 80)
+    # print(f"Directories: {all_dirs}")
+    # print("" + "-" * 80)
+    # print(f"Combined Files and Directories: {combined_files_and_dirs}")
     return combined_files_and_dirs
 
-scan_directory()
+def scan_gitignore_to_add(directory='.'):
+    return
