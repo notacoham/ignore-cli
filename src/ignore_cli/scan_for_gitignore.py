@@ -57,12 +57,13 @@ gitignore_patterns = {
 }
 
 # file and directory scanning function
-def scan_directory_for_create(directory='.'):
+def scan_directory(directory='.', command=None):
     # Variable to hold the root directory and initialize sets for files and directories
     root_directory = os.path.abspath(directory)
     all_files = set()
     all_dirs = set()
     combined_files_and_dirs = {}
+    gitignore_files_and_dirs = {}
 
     # Walk through the directory tree using os.walk
     print(f"Scanning directory: {root_directory}")
@@ -83,14 +84,30 @@ def scan_directory_for_create(directory='.'):
                     file_ending = f".{file_ending}"
                     all_files.add(file_ending)
 
-        # Loop through directories and adding to all_dirs
+        # Check if the directory matches any patterns in gitignore_patterns
         for dir in dirs:
             if dir in gitignore_patterns["directories"]:
+                dir = f"{dir}/"
                 all_dirs.add(dir)
             for pattern in gitignore_patterns["generic_wildcard_patterns"]:
-                # use fnmatch to match patterns
+                # Use fnmatch to match patterns
                 if fnmatch.fnmatch(dir, pattern):
+                    dir = f"{dir}/"
                     all_dirs.add(dir)
+
+        # If the command is 'add', scan the gitignore file for existing patterns
+        if command == 'add':
+            gitignore_path = os.path.join(directory, '.gitignore')
+            with open(gitignore_path, 'r') as f:
+                for line in f:
+                    line = line.strip()
+                    if line and not line.startswith('#'):
+                        if '/' in line: 
+                            gitignore_files_and_dirs.setdefault('directories', []).append(line)
+                        else:
+                            gitignore_files_and_dirs.setdefault('files', []).append(line)
+
+        
     
     # Loop through all files and directories to add them to combined_files_and_dirs
     for file in all_files:
@@ -101,6 +118,15 @@ def scan_directory_for_create(directory='.'):
         if combined_files_and_dirs.get('directories') is None:
             combined_files_and_dirs['directories'] = []
         combined_files_and_dirs['directories'].append(dir)
+    print(f"Combined Files and Directories: {combined_files_and_dirs}")
+
+    # If the command is 'add', combine both dictionaries into one and return it
+    if command == 'add':
+        combined_dict = {}
+        combined_dict['files'] = list(set(gitignore_files_and_dirs.get('files', []) + combined_files_and_dirs.get('files', [])))
+        combined_dict['directories'] = list(set(gitignore_files_and_dirs.get('directories', []) + combined_files_and_dirs.get('directories', [])))
+        print(f"Combined files and directories: {combined_dict}")
+        return combined_dict
 
     # print(f"Files: {all_files}")
     # print("" + "-" * 80)
@@ -108,6 +134,3 @@ def scan_directory_for_create(directory='.'):
     # print("" + "-" * 80)
     # print(f"Combined Files and Directories: {combined_files_and_dirs}")
     return combined_files_and_dirs
-
-def scan_gitignore_to_add(directory='.'):
-    return

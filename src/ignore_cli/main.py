@@ -2,7 +2,7 @@ import argparse
 import os
 # from ignore_cli.gitignore_generator import generate_gitignore
 from ignore_cli.append_to_gitignore import append_to_gitignore
-from ignore_cli.scan_for_gitignore import scan_directory_for_create
+from ignore_cli.scan_for_gitignore import scan_directory
 from ignore_cli.process_gitignore import generate_gitignore 
 
 # Handles the 'create' command to generate a .gitignore file
@@ -12,23 +12,29 @@ def handle_create_command(args):
     if not os.path.isdir(target_directory):
         print(f"Error: The specified directory '{target_directory}' does not exist.")
         return
+    
     # Scans the directory for existing .gitignore files
-    combined_files_and_dirs = scan_directory_for_create(target_directory)
+    combined_files_and_dirs = scan_directory(target_directory, command='create')
 
     # Generates a new .gitignore file with the scanned content
     generate_gitignore(target_directory, content=combined_files_and_dirs)
 
-    # generate_gitignore(target_directory)
-
 # Handles the 'add' command to add to a gitignore file
 def handle_add_command(args):
     target_directory = os.path.abspath(args.directory)
-    pattern_to_add = args.pattern
 
     if not os.path.isdir(target_directory):
         print(f"Error: The specified directory '{target_directory}' does not exist.")
         return
-    append_to_gitignore(target_directory, pattern_to_add)
+    
+    # Scan the directory for .gitignore file
+    if not os.path.exists(os.path.join(target_directory, '.gitignore')):
+        print(f"No .gitignore file found in {target_directory}. Try creating one with 'create'.")
+        return
+
+    # If one exists, scan to add new patterns
+    combined_files_and_dirs = scan_directory(target_directory, command='add')
+    generate_gitignore(target_directory, content=combined_files_and_dirs)
 
 def main():
     # Parses arguments from the command line
@@ -60,10 +66,11 @@ def main():
         default='.',
         help='The directory where the .gitignore file is located. Defaults to the current directory.'
     )
-    add_parser.add_argument(
-        'pattern',
-        help='The pattern to add to the .gitignore file.'
-    )
+    # add_parser.add_argument(
+    #     'pattern',
+    #     help='The pattern to add to the .gitignore file.'
+    # )
+
     add_parser.set_defaults(func=handle_add_command)
 
     args = parser.parse_args()

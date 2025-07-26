@@ -20,7 +20,7 @@ def format_content(content=None):
         content_string += f"{file_extension}\n"
     content_string += "\n## Directories ##\n"
     for directory in content.get('directories', []):
-        content_string += f"{directory}/\n"
+        content_string += f"{directory}\n"
     
     return content_string.strip()
 
@@ -29,18 +29,10 @@ def generate_gitignore(directory, content=None):
     if content is None:
         content = DEFAULT_GITIGNORE_CONTENT
 
-    # Generate new content formatted nicely
-
-
     # Sets the path for the .gitignore file
     gitignore_path = os.path.join(directory, '.gitignore')
 
-    try:
-        # Checks if the .gitignore file already exists
-        if os.path.exists(gitignore_path):
-            print(f".gitignore file already exists at {gitignore_path}")
-            return
-        
+    try:        
         # Writes the formatted content to the .gitignore file
         with open(gitignore_path, 'w') as f:
             formatted_content = format_content(content)

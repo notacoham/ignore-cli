@@ -5,16 +5,16 @@
 ## Python ##
 
 ## Files ##
-.json
 .pth
 .pem
+.json
 .exe
 .pyc
 
 ## Directories ##
-__pycache__/
-.venv/
-logs/
 models/
+__pycache__/
 build/
+logs/
 *.egg-info/
+.venv/
