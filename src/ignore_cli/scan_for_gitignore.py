@@ -62,7 +62,7 @@ def scan_directory(directory='.'):
     root_directory = os.path.abspath(directory)
     all_files = set()
     all_dirs = set()
-    combined_files_and_dirs = set()
+    combined_files_and_dirs = {}
 
     # Walk through the directory tree using os.walk
     print(f"Scanning directory: {root_directory}")
@@ -71,15 +71,19 @@ def scan_directory(directory='.'):
         for file in files:
             file_ending = file.split('.')[-1] if '.' in file else ''
             if file_ending in gitignore_patterns["file_extensions"]:
+                file_ending = f".{file_ending}"
                 all_files.add(file_ending)
             if file in gitignore_patterns["specific_files"]:
+                file_ending = f".{file_ending}"
                 all_files.add(file_ending)
             # loop through generic wildcard patterns and check if file matches
             for pattern in gitignore_patterns["generic_wildcard_patterns"]:
                 # Use fnmatch to match patterns
                 if fnmatch.fnmatch(file, pattern):
+                    file_ending = f".{file_ending}"
                     all_files.add(file_ending)
 
+        # Loop through directories and adding to all_dirs
         for dir in dirs:
             if dir in gitignore_patterns["directories"]:
                 all_dirs.add(dir)
@@ -87,8 +91,16 @@ def scan_directory(directory='.'):
                 # use fnmatch to match patterns
                 if fnmatch.fnmatch(dir, pattern):
                     all_dirs.add(dir)
-        combined_files_and_dirs = all_files | all_dirs
-
+    
+    # Loop through all files and directories to add them to combined_files_and_dirs
+    for file in all_files:
+        if combined_files_and_dirs.get('files') is None:
+            combined_files_and_dirs['files'] = []
+        combined_files_and_dirs['files'].append(file)
+    for dir in all_dirs:
+        if combined_files_and_dirs.get('directories') is None:
+            combined_files_and_dirs['directories'] = []
+        combined_files_and_dirs['directories'].append(dir)
 
     print(f"Files: {all_files}")
     print("" + "-" * 80)
