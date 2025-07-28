@@ -1,6 +1,5 @@
 import argparse
 import os
-# from ignore_cli.gitignore_generator import generate_gitignore
 from ignore_cli.scan_for_gitignore import scan_directory
 from ignore_cli.generate_gitignore import generate_gitignore 
 
@@ -24,8 +23,8 @@ def handle_create_command(args):
     # Generates a new .gitignore file with the scanned content
     generate_gitignore(target_directory, content=combined_files_and_dirs)
 
-# Handles the 'add' command to add to a gitignore file
-def handle_add_command(args):
+# Handles the 'rescan' command to rescan a gitignore file
+def handle_rescan_command(args):
     target_directory = os.path.abspath(args.directory)
 
     if not os.path.isdir(target_directory):
@@ -64,15 +63,15 @@ def main():
     # Sets the function to be called when the 'create' command is used
     create_parser.set_defaults(func=handle_create_command)
 
-    # Adds an argument to add a pattern to the .gitignore file
-    add_parser = subparsers.add_parser('rescan', help='Rescans the directory and updates the .gitignore file with new files or directories.')
-    add_parser.add_argument(
+    # Rescans the directory and updates the .gitignore file with new files or directories.
+    rescan_parser = subparsers.add_parser('rescan', help='Rescans the directory and updates the .gitignore file with new files or directories.')
+    rescan_parser.add_argument(
         '--directory',
         default='.',
         help='The directory where the .gitignore file is located. Defaults to the current directory.'
     )
 
-    add_parser.set_defaults(func=handle_add_command)
+    rescan_parser.set_defaults(func=handle_rescan_command)
 
     args = parser.parse_args()
 
