@@ -16,6 +16,8 @@
 
 # What and why
 
+**NOTE:** This project was made for the `Boot.dev 2025 Hackathon`, If you are here for the hackathon, Welcome fellow adventurers!
+
 If you're anything like me, you always find yourself asking the question:
 `What file types go into a .gitignore?`
 or
@@ -50,7 +52,7 @@ The `create` command is to be used in a fresh project that does not have a `.git
 $ ignore create [target-directory]
 ```
 
-
+**NOTE:** If used without a directory, the default will be the current directory
 
 ## Add patterns
 
@@ -60,5 +62,5 @@ The `rescan` command is to be used in projects that already have a `.gitignore` 
 $ ignore rescan [target-directory] 
 ```
 
-**NOTE:** # If used without a directory, the default will be the current directory
+**NOTE:** If used without a directory, the default will be the current directory
 
