@@ -45,7 +45,7 @@ gitignore_patterns = {
         ".env", ".env.local", ".flaskenv", "config.ini.local",
         "settings_local.py", "local_settings.py",
         "npm-debug.log", "yarn-debug.log", "yarn-error.log", ".pnp.js",
-        "Dockerfile.backup",
+        "Dockerfile.backup", "db.sqlite3", "db.sqlite3-journal",
     ],
     "generic_wildcard_patterns": [
         "npm-debug.log*", 
