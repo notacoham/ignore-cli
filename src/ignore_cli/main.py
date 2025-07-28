@@ -44,7 +44,7 @@ def handle_add_command(args):
 def main():
     # Parses arguments from the command line
     parser = argparse.ArgumentParser(
-        description='Scan and generate a .gitignore file in the specified directory with only the necessary files and directories.'
+        description='Scan a project and generate a .gitignore file in the specified directory with only the necessary files and directories.'
     )
 
     # Adds a subparser for the 'create' command

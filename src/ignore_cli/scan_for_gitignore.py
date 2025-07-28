@@ -118,14 +118,14 @@ def scan_directory(directory='.', command=None):
         if combined_files_and_dirs.get('directories') is None:
             combined_files_and_dirs['directories'] = []
         combined_files_and_dirs['directories'].append(dir)
-    print(f"Combined Files and Directories: {combined_files_and_dirs}")
+    # print(f"Combined Files and Directories: {combined_files_and_dirs}")
 
     # If the command is 'add', combine both dictionaries into one and return it
     if command == 'add':
         combined_dict = {}
         combined_dict['files'] = list(set(gitignore_files_and_dirs.get('files', []) + combined_files_and_dirs.get('files', [])))
         combined_dict['directories'] = list(set(gitignore_files_and_dirs.get('directories', []) + combined_files_and_dirs.get('directories', [])))
-        print(f"Combined files and directories: {combined_dict}")
+        # print(f"Combined files and directories: {combined_dict}")
         return combined_dict
 
     # print(f"Files: {all_files}")
