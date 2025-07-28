@@ -19,7 +19,7 @@ gitignore_patterns = {
         ".secrets", ".local", ".config",
         ".aws-sam", ".serverless", ".firebase", ".render", ".heroku", ".vercel", ".next",
         "node_modules", ".pnp", ".yarn",
-        "docs/_build", ".remote",
+        "docs/_build", ".remote", "media", "static",
     ],
     "file_extensions": [
         "pyc", "pyd", "pyo", "so", "lo", "dylib", "egg", "whl", "c", "cpp", "f", "for",
@@ -34,7 +34,7 @@ gitignore_patterns = {
         "ckpt", "onnx", "pb", "pth", "pt", "keras", "cbm", "dill",
         "log", 
         "terraform.tfvars", "key", "pem", "crt", "csr", "pfx", "sqlite3", "db3",
-        "db-journal", "db-wal", "db-shm",
+        "db-journal", "db-wal", "db-shm", "pot", "mo", "po",
     ],
     "specific_files": [
         ".LSOverride", "Thumbs.db", "desktop.ini", "._*",
