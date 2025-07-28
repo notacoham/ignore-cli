@@ -1,5 +1,47 @@
 import os
-from .gitignore_generator import DEFAULT_GITIGNORE_CONTENT 
+
+# Default content for the .gitignore file
+DEFAULT_GITIGNORE_CONTENT = """
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.pyc
+*.pyd
+*.pyo
+
+# Distribution / packaging
+.Python
+env/
+venv/
+*.egg
+*.egg-info/
+dist/
+build/
+*.whl
+
+# IDE-specific files
+.idea/             # IntelliJ / PyCharm
+*.iml              # IntelliJ / PyCharm module files
+.vscode/           # VS Code
+.vscode-server/    # VS Code remote development
+.history/          # Some IDEs' local history
+
+# Operating System files
+.DS_Store          # macOS
+Thumbs.db          # Windows
+
+# Temporary files, logs, etc.
+*.log
+*.tmp
+*.bak
+
+# Testing
+.pytest_cache/
+htmlcov/
+.coverage
+
+# User-specific configuration (if any sensitive data)
+# .env # If you use python-dotenv for environment variables
+"""
 
 def format_content(content=None):
     # If no content is provided, sets the default git content
