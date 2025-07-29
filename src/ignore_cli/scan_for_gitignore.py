@@ -19,7 +19,7 @@ gitignore_patterns = {
         ".secrets", ".local", ".config",
         ".aws-sam", ".serverless", ".firebase", ".render", ".heroku", ".vercel", ".next",
         "node_modules", ".pnp", ".yarn",
-        "docs/_build", ".remote", "media", "static",
+        "docs/_build", ".remote",
     ],
     "file_extensions": [
         "pyc", "pyd", "pyo", "so", "lo", "dylib", "egg", "whl", "c", "cpp", "f", "for",
