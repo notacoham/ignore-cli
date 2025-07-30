@@ -16,8 +16,6 @@
 
 # What and why
 
-**NOTE:** This project was made for the `Boot.dev 2025 Hackathon`, If you are here for the hackathon, Welcome fellow adventurers!
-
 If you're anything like me, you always find yourself asking the question:
 `What file types go into a .gitignore?`
 or
